@@ -1,9 +1,12 @@
 export const skillNames = {
   analytics: "Product Analytics",
-  discovery: "Problem Discovery",
+  discovery: "Product Discovery",
   experimentation: "Experimentation",
-  prioritization: "Prioritization",
-  business: "Business Thinking",
+  prioritization: "Prioritization & Delivery",
+  business: "Business & Growth",
+  strategy: "Product Strategy",
+  stakeholder: "Stakeholder Management",
+  leadership: "Product Leadership",
 } as const;
 export type Skill = keyof typeof skillNames;
 export const lessonId = "diagnosing_retention_drop" as const;
