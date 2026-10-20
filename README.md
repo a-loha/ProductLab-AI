@@ -1,87 +1,98 @@
 # ProductLab AI
 
-A small, free Product Management learning simulator. Read one retention scenario, explain your investigation plan, and get structured feedback from a model running locally in your browser.
+A browser-based Product Management simulation built in the existing React + TypeScript + Vite project. Run **Pulse**, a fictional $12/month B2C wellness subscription product, and learn through decisions, consequences, targeted practice, and transfer.
 
-React + TypeScript + Vite, with [WebLLM](https://webllm.mlc.ai/). No backend, account, database, analytics, API keys, or paid inference service.
+**Scenario → Decision → Consequences → Skill Gap → Micro-Lesson → Transfer Challenge → Progress Update**
 
-## Use entirely through GitHub
+The brand remains ProductLab AI, but the application uses **no runtime AI**, model downloads, GPU requirements, backend, external database, authentication, analytics, or paid API. All feedback comes from original, explicit decision rules. Only React and React DOM are runtime dependencies.
 
-GitHub Pages can serve this static application for free from this public repository. You do not need Node, npm, or project files on your Mac to use the published app.
+## The experience
 
-One-time setup in the GitHub website:
+- **Dashboard:** live simulation metrics, current stage, competency evidence, recommended/available learning, and Continue Simulation.
+- **Simulation:** three connected decisions—Retention Crisis, Segment Investigation, and Product Decision—with four options each, budget trade-offs, feedback, skill evidence, and a decision journal.
+- **Personalized Learning:** an approximately five-minute lesson, _Diagnosing a Retention Drop_, assigned when a decision reveals a diagnosis gap. It is optional practice for learners who have not shown a gap.
+- **Progress & Feedback:** decisions, mistake categories, criterion-level evidence, lesson status, transfer results, and recorded reflections. No professional grades or claims of mastery.
 
-1. Open this repository's **Settings → Pages**. Under **Build and deployment**, select **GitHub Actions** as the source.
-2. Merge the application and `.github/workflows/pages.yml` into `main`.
-3. Open **Actions → Build and publish ProductLab AI** and wait for the deployment to finish successfully.
-4. Open the website URL shown by the `github-pages` deployment. Use current desktop Chrome or Edge with WebGPU enabled.
+The micro-lesson teaches **Verify → Localize → Explain → Act** through three interactive checks and a new D7 onboarding transfer challenge. The challenge requires a next step, supporting evidence, and a conditional action. All three structured selections must meet the visible rubric to pass. An optional written reflection is saved but is not automatically graded. Failed attempts can be retried; only the latest attempt contributes to competency evidence.
 
-The workflow installs dependencies, builds the app, and uploads only the generated `dist` files. Pull requests get a build check; pushes to `main` publish the site. Future changes can be made in Codex or GitHub's web editor, then merged through a pull request. An existing `main` commit can also be published using **Actions → Build and publish ProductLab AI → Run workflow** with the `main` branch selected.
+Choices become final when checked/confirmed. A lesson’s first checked answers remain in the record; the transfer challenge is the opportunity to apply what was learned. Reading a lesson alone awards no competency evidence. Recommended learning does not block continuing the simulation.
 
-The Vite build uses relative asset URLs so the app, icon, lazy runtime, and worker can load under the `/ProductLab-AI/` project path. Opening a downloaded `index.html` using `file://` still does not launch React; open the deployed HTTPS website instead.
+## Fictional economy and evidence
 
-GitHub hosts the application files. AI inference still uses your own browser and GPU. The first visit downloads the model into browser storage, so this does not remove the WebGPU or model download requirements. No API key or inference server is involved.
+| Metric                 | Initial state       | Rule                                                                                                                                                                           |
+| ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| MRR                    | $48,000             | 4,000 current subscriptions × $12. Recurring concessions reduce MRR; the scripted acquisition cycle adds gross subscription MRR.                                               |
+| D30 activity retention | 21%, previously 28% | The latest fully matured cohort has 210 / 1,000 active users on day 30. Investigation or repair choices do not alter this historical observation.                              |
+| CAC                    | $42                 | Latest acquisition spend of $42,000 / 1,000 new paying subscribers. A new scripted acquisition cycle can replace this observed CAC.                                            |
+| Cash                   | $120,000            | Stated action costs are paid upfront and deducted exactly once. MRR is a run rate, not immediate cash. Other operating costs and churn forecasts are outside this small model. |
+
+The cohort table reconciles exactly: applying prior channel rates to the new mix yields 24%. Mix contributes 4 percentage points of the overall decline; paid-social deterioration contributes the other 3. Paid-social Android then narrows the investigation without proving a causal retention impact.
+
+The third scenario offers a clearly labeled, fixed acquisition outcome: $30,000 spend acquires 600 new $12 subscriptions, adding $7,200 gross MRR at $50 CAC. This advances a scripted acquisition cycle rather than predicting real performance. The new cohort has not matured to D30. Other actions are costs, investigations, or interventions without an assumed positive business outcome. Two selected discounts are additive in this model and never exceed 30% of list price for the 400 eligible subscriptions.
+
+Competency bars count demonstrated behaviors out of the opportunities available in this learning loop. Empty space includes activities not attempted. The five competencies are Product Analytics, Problem Discovery, Experimentation, Prioritization, and Business Thinking. Each criterion can contribute at most once per source; transfer retries replace rather than stack evidence. A correct answer is one practice signal, not proof of mastery.
+
+## Use through GitHub, with no local installation
+
+The existing public repository deploys to **GitHub Pages**. In **Settings → Pages**, keep **Source: GitHub Actions**.
+
+1. Merge a reviewed change into `main`.
+2. Wait for **Actions → Build and publish ProductLab AI** to finish successfully.
+3. Open the URL shown in the `github-pages` deployment.
+
+Pull requests build and run the automated tests. Pushes to `main` build, test, and publish `dist/`. Existing `main` can also be published with **Actions → Build and publish ProductLab AI → Run workflow**. Relative asset paths support `/ProductLab-AI/`. Open the HTTPS site rather than a downloaded HTML file via `file://`.
 
 ## Run locally
 
-Use Node.js **20.19+ or 22.12+** (Node 24 is supported) and npm.
+Use Node.js 24 LTS (also compatible with Node 20.19+ or 22.12+) and npm. From the folder containing `package.json`:
 
 ```sh
-git clone https://github.com/a-loha/ProductLab-AI.git
-cd ProductLab-AI
-npm ci
+npm install
 npm run dev
 ```
 
-Open the local address printed by Vite in a current **desktop Chrome or Edge**, with hardware acceleration enabled. WebGPU needs **localhost or HTTPS**; an ordinary HTTP LAN address will not work. Other browsers and devices may work where WebGPU is available, but have not been validated.
+Keep the terminal open and open the **exact localhost URL printed by Vite**, normally `http://localhost:5173/`. You do not need a particular GPU or a model download. A current browser with JavaScript and localStorage is sufficient. If storage is disabled, the app remains playable and warns that progress is not retained.
 
-1. Click **Load local coach**. The app first probes for a WebGPU adapter.
-2. Wait for model download and GPU initialization; progress appears in the coach card. You can write your response while it loads.
-3. Describe how you would investigate the D30 retention drop from **28% to 21%**.
-4. Click **Get feedback** to review problem framing, data-driven reasoning, hypothesis quality, and prioritization, plus strengths, missing considerations, a learning topic, and improvements.
+For a reproducible install, use `npm ci` instead of `npm install`.
 
-The model is **`Qwen2.5-0.5B-Instruct-q4f32_1-MLC`**, a supported, quantized instruction model from WebLLM's built-in model list. The f32 variant avoids requiring the optional `shader-f16` feature. WebLLM estimates **1,060 MB of GPU memory**; allow additional headroom. Initial model downloads total several hundred MB and may take a few minutes. Browser caching can reduce later downloads but depends on storage availability. Even cached models must initialize again after a page reload. The WebLLM runtime is loaded only when you request the coach.
+## Persistence
 
-Internet access is needed for the initial model/runtime download from `huggingface.co`, its file redirect hosts (typically `cas-bridge.xethub.hf.co` or other `*.hf.co` hosts), and `raw.githubusercontent.com`. Responses are never sent to these hosts. There is no server inference fallback. This prototype does not promise fully offline startup.
+The versioned `productlab.progress` localStorage record stores the current view/scenario, confirmed decisions, lesson step and answers, recent transfer attempts and notes, and derived metric/competency summaries. On load, canonical choices are validated and replayed; stored summaries are never trusted. Corrupted, unknown-version, invalid-option, duplicate, and nonsequential saves recover to a fresh session with an explanatory notice.
 
-Your response and feedback are held only in tab memory and cleared on refresh. Model artifacts may remain in browser storage. Never enter confidential information into an experimental learning tool.
+Progress survives closing and reopening the browser on the **same site, browser profile, and device**. Clearing site data, switching origin/profile, or a private session can remove or separate progress. There is no cross-device synchronization. Transfer history retains the latest 20 attempts. Unsubmitted radio selections and reflection edits are drafts in the current tab; only confirmed choices/challenges persist. Do not run competing sessions in multiple tabs; the most recent save wins.
 
-## Build and checks
+Use **Restart simulation** to clear this simulation’s decisions, lesson progress, transfer attempts, and metrics after confirmation. It does not clear unrelated website storage.
+
+## Build and test
 
 ```sh
 npm run build
-npm run preview
-```
-
-The build type-checks the application and emits static files in `dist/`. Vite reports a large-chunk warning for WebLLM's bundled runtime; the runtime is deliberately loaded on demand, and its worker is emitted separately.
-
-```sh
-# Once, if Chromium is not already installed:
+# Once, if Chromium is not installed:
 npx playwright install chromium
-npm run build
 npm test
 ```
 
-Tests use `/usr/bin/chromium` when present, otherwise Playwright's installed Chromium. Set `CHROMIUM_PATH` to use another Chromium executable. The test runner starts the built application on port 4173.
+`build` runs strict TypeScript checking and emits static files in `dist/`. `npm run preview` serves the production build. Playwright starts a production preview on port 4173, uses `/usr/bin/chromium` when available or its installed browser, and supports `CHROMIUM_PATH` for another Chromium executable. GitHub Actions installs Playwright’s browser and OS dependencies before running checks.
 
-The 14 automated checks cover missing/unavailable WebGPU adapters, loading progress, successful feedback rendering, revised drafts, malformed/truncated output, download and worker errors, cancellation, mobile overflow, and feedback validation. **Model-dependent tests simulate the worker protocol; they do not download a model or prove GPU inference works.** No test feedback is used by the application.
+The automated checks cover:
 
-## What still needs a real GPU browser
+- Cohort totals and the 4 pp / 3 pp decomposition.
+- Every one of the 64 simulation paths, one-time spending, explicit MRR/CAC changes, and unchanged historical D30.
+- All 36 transfer combinations and the visible pass rubric.
+- Gap assignment, sequential lessons, and prevention of duplicate/retry evidence inflation.
+- Valid save replay and rejection of corrupted, outdated, invalid, or nonsequential saves.
+- The complete decision → lesson → failed/passed transfer → continued simulation journey.
+- Reload/new-tab persistence, blocked storage, restart cancellation/confirmation, keyboard controls, and mobile overflow.
 
-The production build and automated checks passed in the cloud environment. Its headless Chromium exposed WebGPU but returned no usable adapter, and its network policy blocked Hugging Face. Actual model download, initialization, and inference therefore remain **unverified**.
+Desktop and mobile layouts are inspected in headless Chromium. Real Safari/Firefox, screen-reader behavior, long-term storage eviction, and concurrent tabs are not claimed as validated. There is no model inference or external service to test.
 
-Before judging this proof of concept, run these checks on a supported GPU browser:
+## Code map
 
-- Complete a cold download, then reload and verify cache reuse and initialization progress. Check network/storage errors and a retry.
-- Submit a strong investigation plan, a solution-first answer, and an irrelevant answer. Confirm the four ratings and actionable feedback reflect what was actually written. Repeat an answer to assess consistency.
-- Inspect the Network panel: evaluating a response should make **no inference HTTP request**. All generation happens in the local WebLLM worker.
-- Check inference speed and memory on your target laptop, and recovery after GPU/device loss or closing the tab. Test a long response and an instruction-injection attempt.
-- Try another supported browser/device before claiming cross-browser or mobile inference support. The mobile layout is tested; mobile GPU inference is not.
+- `src/content.ts`: original scenario/lesson content, decision options, criteria, tags, and economic assumptions.
+- `src/simulation.ts`: deterministic transitions, economy, lesson assignment, transfer rubric, and competency evidence.
+- `src/storage.ts`: versioned validation, recovery, replay, and persistence.
+- `src/App.tsx`: four views and shared accessible controls.
+- `src/styles.css`: responsive styling using the existing system fonts, purple palette, and card treatment.
+- `tests/`: calculation and production-browser checks.
 
-The 0.5B model favors a small download over nuanced coaching. JSON-constrained generation and runtime validation protect the feedback display, but cannot ensure the advice is accurate, fair, or useful. Feedback is a reflection aid, not an authoritative score. Loading times out after eight minutes; feedback after three minutes. Cancelling terminates the worker and requires loading the coach again. Invalid or truncated feedback is rejected while preserving the response for retry.
-
-## Small code map
-
-- `src/App.tsx`: scenario, response form, loading/error states, and feedback display.
-- `src/ai.ts` and `src/llm.worker.ts`: compatibility probe and local WebLLM lifecycle.
-- `src/feedback.ts`: original scenario, evaluation rubric, JSON schema, and output validation.
-- `src/styles.css`: responsive styling with system fonts and no external assets.
+This is one complete learning loop, not a general course platform. The economy is intentionally small, feedback reflects predefined choices, and there is no free-text AI scoring.
