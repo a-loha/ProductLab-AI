@@ -19,12 +19,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '24'
+          node-version: "24"
           cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Build the app
         run: npm run build
+      - name: Install browser for checks
+        run: npx playwright install --with-deps chromium
+      - name: Test simulation and browser flows
+        run: npm test
       - name: Upload the website
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
